@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="head">
+        <div class="logo">
+            <h1>Kanban Board</h1>
+        </div>
+
+        <div class="create-btn">
+            <button id="createBtn">Create</button>
+            <button id="toggleButton">Dark Mode</button>
+        </div>
+    </div>
+
+    <section class="popUpCard">
+        <div class="selectToCreate">
+            <div class="selectHeading">
+                <h4>What you want to create</h4>
+                <p id="closeButton">X</p>
+            </div>
+
+            <div class="createCardBoard">
+                <div id="selectBoard">Board</div>
+                <div id="selectCard">Card</div>
+            </div>
+        </div>
+
+        <div class="inputTask">
+            <label for="inputName">Title :</label>
+            <input type="text" name="input" id="inputCardBoard">
+        </div>
+
+        <div class="descriptionDiv">
+            <label for="description">Description :</label>
+            <textarea name="description" id="description" placeholder="if card is selected"></textarea>
+        </div>
+
+        <div class="createTaskButton">
+            <button id="createButton">Create</button>
+        </div>
+    </section>
+
+    <main>
+        <div class="board" id="todoBoard">
+            <div class="board-heading">
+                <button class="showColor"></button>
+                <h3>Todo</h3>
+                <p id="totalCardsInTodo" class="card-count"></p>
+            </div>
+        </div>
+
+        <div class="board" id="progressBoard">
+            <div class="board-heading">
+                <button class="showColor"></button>
+                <h3>In Progress</h3>
+                <p id="totalCardsInProgress" class="card-count"></p>
+            </div>
+        </div>
+        
+        <div class="board" id="doneBoard">
+            <div class="board-heading">
+                <button class="showColor"></button>
+                <h3>Done</h3>
+                <p id="totalCardsInDone" class="card-count"></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
