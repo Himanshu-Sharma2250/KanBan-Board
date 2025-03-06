@@ -8,6 +8,7 @@ const todoBoard = document.getElementById("todoBoard")
 const noOfCardsInTodo = document.getElementById("totalCardsInTodo")
 const noOfCardsInProgress = document.getElementById("totalCardsInProgress")
 const noOfCardsInDone = document.getElementById("totalCardsInDone")
+const updateModal = document.querySelector(".updateModal")
 
 selectBoardElement.addEventListener('click', () => {
     selectBoardElement.style.backgroundColor = "crimson"
@@ -59,35 +60,23 @@ createCardBoardButton.addEventListener('click', (event) => {
 
     popUpCardElement.classList.remove("active")
 })
+const months = ["January", "February", "March", "April", "May", "June", "July", "September", "October", "November", "December"]
 
 function createCard(value, description) {
+    // task container stores two more container
     const taskDiv = document.createElement('div')
     taskDiv.className = "Task"
     taskDiv.setAttribute("draggable", true)
     taskDiv.style.padding = "30px 10px"
     taskDiv.style.justifyContent = "space-between"
+    taskDiv.style.border = `1.5px solid rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255})`
 
+    // first inner task container store head and para
     const taskContent = document.createElement('div')
     taskContent.style.display = "flex"
     taskContent.style.flexDirection = "column"
     taskContent.style.alignItems = "flex-start"
-
-    const deleteDiv = document.createElement('div')
-    const deleteButton = document.createElement('button')
-    deleteButton.style.backgroundColor = "transparent"
-    deleteButton.style.border = "transparent"
-    deleteButton.className = "deleteBtn"
-    const img = document.createElement('img')
-    img.className = "deleteImg"
-    img.setAttribute("src", "./delete-svgrepo-com (1).svg")
-    img.style.filter = "contrast(0)"
-    img.style.height = "15px"
-    img.style.width = "15px"
-    img.style.background = "transparent"
-    img.style.border = "transparent"
-    deleteButton.style.cursor = "pointer"
-    deleteButton.appendChild(img)
-    deleteDiv.appendChild(deleteButton)
+    taskContent.style.justifyContent = "space-around"
 
     const h4 = document.createElement('h4')
     h4.innerText = value
@@ -98,6 +87,50 @@ function createCard(value, description) {
     taskContent.appendChild(h4)
     taskContent.appendChild(p)
 
+    // second inner task container stores date, edit and delete data
+    const deleteDiv = document.createElement('div')
+    deleteDiv.style.display = "flex"
+    deleteDiv.style.flexDirection = "column"
+    deleteDiv.style.gap = "5px"
+    deleteDiv.style.alignItems = "flex-end"
+
+    // display date
+    const now = new Date()
+    const nowHour = now.getHours()
+    const nowMinute = now.getMinutes()
+    const minutes = nowMinute < 10 ? `0${nowMinute}` : nowMinute
+    const nowDate = now.getDate()
+    const nowMonth = months[now.getMonth()]
+    const nowYear = now.getFullYear()
+    const datePara = document.createElement('small')
+    datePara.textContent = `${nowHour}:${minutes}, ${nowDate} ${nowMonth} ${nowYear}`
+
+    // edit button with image
+    const editButton = document.createElement('button')
+    editButton.className = "editButton"
+    const editImage = document.createElement('img')
+    editImage.className = "taskEditDeleteImage"
+    editImage.setAttribute("src", "./edit-major-svgrepo-com.svg")
+    
+    editButton.appendChild(editImage)
+
+    // delete button with image
+    const deleteButton = document.createElement('button')
+    deleteButton.style.backgroundColor = "transparent"
+    deleteButton.style.border = "transparent"
+    // deleteButton.className = "deleteBtn"
+    const img = document.createElement('img')
+    img.className = "taskEditDeleteImage"
+    img.setAttribute("src", "./delete-svgrepo-com (1).svg")
+    deleteButton.style.cursor = "pointer"
+
+    deleteButton.appendChild(img)
+
+    // append childs of deleteDiv
+    deleteDiv.appendChild(datePara)
+    deleteDiv.appendChild(editButton)
+    deleteDiv.appendChild(deleteButton)
+
     taskDiv.appendChild(taskContent)
     taskDiv.appendChild(deleteDiv)
 
@@ -107,6 +140,34 @@ function createCard(value, description) {
     deleteButton.addEventListener('click', () => {
         taskDiv.remove()
         updateCount()
+    })
+
+    editButton.addEventListener('click', function() {
+        updateModal.classList.add("activeModal")
+
+        document.getElementById("updatedTitle").value = value
+        document.getElementById("updatedDescription").textContent = description
+
+        
+        document.getElementById("saveUpdateButton").addEventListener('click', function() {
+            const updatedTitle = document.getElementById("updatedTitle").value
+            const updateDescription = document.getElementById("updatedDescription").value
+
+            h4.innerText = updatedTitle
+            p.innerText = updateDescription
+
+            const now = new Date()
+            const nowHour = now.getHours()
+            const nowMinute = now.getMinutes()
+            const minutes = nowMinute < 10 ? `0${nowMinute}` : nowMinute
+            const nowDate = now.getDate()
+            const nowMonth = months[now.getMonth()]
+            const nowYear = now.getFullYear()
+            // const datePara = document.createElement('small')
+            datePara.textContent = `${nowHour}:${minutes}, ${nowDate} ${nowMonth} ${nowYear}`
+
+            updateModal.classList.remove("activeModal")
+        })
     })
 
     taskDiv.addEventListener('dragstart', function() {
@@ -141,11 +202,7 @@ function createBoard(value) {
     deleteButton.style.border = "transparent"
     const img = document.createElement('img')
     img.setAttribute("src", "./delete-svgrepo-com (1).svg")
-    img.style.filter = "contrast(0)"
-    img.style.height = "15px"
-    img.style.width = "15px"
-    img.style.background = "transparent"
-    img.style.border = "transparent"
+    img.className = "taskEditDeleteImage"
     deleteButton.appendChild(img)
     deleteButton.style.cursor = "pointer"
     deleteButton.style.alignSelf = "center"
@@ -223,8 +280,7 @@ document.getElementById("closeButton").addEventListener('click', function() {
     popUpCardElement.classList.remove("active")
 })
 
-window.addEventListener('beforeunload', function(event) {
-    event.preventDefault()
-
-    // event.returnValue = true
+document.getElementById("modalCloseButton").addEventListener('click', function() {
+    updateModal.classList.remove("activeModal")
 })
+
