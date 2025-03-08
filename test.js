@@ -136,7 +136,8 @@ function createCardElement(cardData, boardElement, saveToStorage = true) {
     taskDiv.className = 'Task';
     taskDiv.draggable = true;
     taskDiv.dataset.cardId = cardData.id;
-    taskDiv.style.cssText = 'padding: 30px 10px; justify-content: space-between; border: 1.5px solid rgba(0,0,0,0.2);';
+    taskDiv.style.cssText = 'padding: 30px 10px; justify-content: space-between;';
+    taskDiv.style.border = "1.5px solid rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})"
 
     // Task content
     const taskContent = document.createElement('div');
