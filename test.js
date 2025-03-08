@@ -136,8 +136,7 @@ function createCardElement(cardData, boardElement, saveToStorage = true) {
     taskDiv.className = 'Task';
     taskDiv.draggable = true;
     taskDiv.dataset.cardId = cardData.id;
-    taskDiv.style.cssText = 'padding: 30px 10px; justify-content: space-between;';
-    taskDiv.style.border = "1.5px solid rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})"
+    taskDiv.style.cssText = `padding: 30px 10px; justify-content: space-between; border: 1.5px solid rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255});`;
 
     // Task content
     const taskContent = document.createElement('div');
@@ -257,8 +256,7 @@ createCardBoardButton.addEventListener('click', (e) => {
     popUpCardElement.classList.remove("active");
 });
 
-// old code
-
+// update the count of the tasks
 function updateCount() {
     const allBoards = document.querySelectorAll(".board")
     allBoards.forEach((board) => {
@@ -272,6 +270,7 @@ function updateCount() {
     })
 }
 
+// switch theme - dark to light 
 const toggleButton = document.getElementById("toggleButton")
 toggleButton.addEventListener('click', function() {
     if (toggleButton.innerText == "Dark Mode") {
@@ -295,10 +294,12 @@ toggleButton.addEventListener('click', function() {
     }
 })
 
+// close button to close the popUpCardElement
 document.getElementById("closeButton").addEventListener('click', function() {
     popUpCardElement.classList.remove("active")
 })
 
+// close the update modal
 document.getElementById("modalCloseButton").addEventListener('click', function() {
     updateModal.classList.remove("activeModal")
 })
