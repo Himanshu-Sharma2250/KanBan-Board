@@ -24,7 +24,6 @@ selectCardElement.addEventListener('click', () => {
 
 createButton.addEventListener('click', () => {
     popUpCardElement.classList.add("active")
-
 })
 
 createCardBoardButton.addEventListener('click', (event) => {
